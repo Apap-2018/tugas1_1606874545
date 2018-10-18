@@ -10,6 +10,7 @@ import com.apap.tugas1.repository.InstansiDB;
 import com.apap.tugas1.repository.PegawaiDB;
 
 import com.apap.tugas1.model.InstansiModel;
+import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
 
 @Service
@@ -21,25 +22,28 @@ public class PegawaiServiceImpl implements PegawaiService {
 	private PegawaiModel pegawaiModel;
 	private InstansiModel instansiModel;
 	
-	/*@Override
-	public PegawaiModel getPegawaiDetailByNip(String nip){
-		System.out.println(nip+"zz");
-		System.out.println("masuk service");
-		pegawaiDB.findByNip(nip);
-		
-		for(PegawaiModel pegawai:pegawaiDB.findAll()) {
-			System.out.println(pegawai.getNip());
-			if(pegawai.getNip().equalsIgnoreCase(nip)) {
-				return pegawai;
-			}
-		}
-		return null;
-	}*/
-	
 	
 	@Override
 	public PegawaiModel getPegawaiDetailByNip(String nip) {
 		return pegawaiDB.findByNip(nip);
+	}
+	
+	@Override
+	public double getGajiPegawai(String nip) {
+		PegawaiModel pegawaiTarget = pegawaiDB.findByNip(nip);
+		double gajiPokokMax=0;
+		
+		for (JabatanModel jabatan : pegawaiTarget.getJabatanList() ) {
+			if(jabatan.getGajiPokok()>gajiPokokMax) {
+				gajiPokokMax=jabatan.getGajiPokok();
+			}
+		}
+		
+		Double tunjangan = pegawaiTarget.getInstansi().getProvinsi().getPresentaseTunjangan();
+		
+		Double totalGaji = gajiPokokMax+((tunjangan/100)*gajiPokokMax);
+		
+		return totalGaji;
 	}
 	
 	

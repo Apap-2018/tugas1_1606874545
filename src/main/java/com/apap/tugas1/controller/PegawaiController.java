@@ -51,14 +51,21 @@ private ProvinsiDB provinsiDB;
 	@RequestMapping(value= {"/pegawai"}, method=RequestMethod.GET)
 	private String viewPegawai(String nip, Model model)	{
 		PegawaiModel pegawai = pegawaiService.getPegawaiDetailByNip(nip);
+		
+		Double gaji = pegawaiService.getGajiPegawai(nip);
+		
 		model.addAttribute("pegawai",pegawai);
+		model.addAttribute("gaji", gaji);
 		return "view-pegawai";
 	}
 	
 	
 	@RequestMapping("/pegawai/tambah")
 	private String tambahPegawai(Model model) {
+		PegawaiModel pegawai = new PegawaiModel();
+		pegawai.setInstansi(new InstansiModel());
 		
+		model.addAttribute("pegawai", pegawai);
 		model.addAttribute("provinsi", provinsiDB.findAll());
 		model.addAttribute("instansi", instansiDB.findAll());
 		model.addAttribute("jabatan", jabatanDB.findAll());
@@ -67,11 +74,15 @@ private ProvinsiDB provinsiDB;
 	}
 	
 	@RequestMapping(value="/pegawai/tambah",method=RequestMethod.POST)
-	private String hapusJabatan(@ModelAttribute PegawaiModel pegawaiBaru, Model model) {
+	private String tambahJabatanSubmit(@ModelAttribute PegawaiModel pegawaiBaru, Model model) {
 		
+		System.out.println(pegawaiBaru.getNama());
+		
+		
+		System.out.println(pegawaiBaru.getJabatanList());
 		
 		model.addAttribute("notif", "Jabatan");
-		model.addAttribute("keterangan", "hapus");
+		model.addAttribute("keterangan", "wkwkwk");
 		
 		return "berhasil";
 		

@@ -11,6 +11,8 @@ public interface PegawaiService {
 
 	PegawaiModel getPegawaiDetailByNip(String nip);
 
+	double getGajiPegawai(String nip);
+
 	
 	
 }
