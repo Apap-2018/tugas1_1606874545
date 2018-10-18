@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	
+</head>
+
+<body>
+
+<form>
+		<table>
+			<thead>
+				<tr>
+					<th style="text-align: center">No.</th>
+					<th></th>
+					<th style="text-align: center">Nama</th>
+					<th></th>
+					<th style="text-align: center">Gaji</th>
+								
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="jabatan,iterationStatus : ${jabatan}">
+					<td th:text="${iterationStatus.count}"style="text-align: center"></td>
+					<td></td>
+					<td th:text="${jabatan.nama}" ></td>
+					<td> </td>
+					<td th:text="${jabatan.gajiPokok}"></td>
+					
+				
+						
+					<td>
+						
+					
+					</td>			
+				</tr>
+			</tbody>
+		</table>
+	
+	</form>
+	
+</body>
+</html>

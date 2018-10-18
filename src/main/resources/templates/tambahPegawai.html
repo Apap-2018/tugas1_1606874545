@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Tambah Pegawai</title>
+</head>
+
+<body>
+	<h2> Tambah Pegawai </h2>
+	<form th:action="@{/pegawai/tambah}" th:object="${jabatan}" method="POST">
+		
+		Nama: <br>
+		<input type="text" name="nama" />
+		<br>
+		Tempat Lahir: <br>
+		<input type="text" name="tempatLahir" />
+		<br>
+		Tanggal Lahir: <br>
+		<input type="date" name="tanggalLahir" />
+		<br>
+		Provinsi: <br>
+		<select>
+				  <option th:each="provinsi : ${provinsi}" 
+				          th:value="${provinsi.id}" 
+				          th:text="${provinsi.nama}"
+				          th:selected="${provinsi.id}"></option>
+		</select>
+		<br>
+		
+		Nama Instansi: <br>
+		<select>
+				  <option th:each="instansi : ${instansi}" 
+				          th:value="${instansi.id}" 
+				          th:text="${instansi.nama}"
+				          th:selected="${instansi.id}"></option>
+		</select>
+		<br>	
+		
+		Jabatan: <br>
+		<select>
+				  <option th:each="jabatan : ${jabatan}" 
+				          th:value="${jabatan.id}" 
+				          th:text="${jabatan.nama}"
+				          th:selected="${jabatan.id}"></option>
+		</select>
+		
+		<br>	
+		<br>	
+		
+		
+		<button type="submit"> Tambah </button>
+	</form>
+</body>
+	
+
+
+
+
+	
+	
+	
+</body>
+</html>
