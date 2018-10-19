@@ -32,9 +32,14 @@
 		
 		<form th:action="@{/jabatan/hapus}" th:object=${jabatan} method="POST">
 			<input type="hidden" th:field="${jabatan.id}" />
-			<button type="submit"> Hapus </button>
+			<button type="submit" onclick="myFunction()"> Hapus </button>
 		</form>	
 		
+	<script>
+		function myFunction() {
+    	alert("Jabatan Berhasil Dihapus");
+		}
+		</script>	
 		
 
 	</body>

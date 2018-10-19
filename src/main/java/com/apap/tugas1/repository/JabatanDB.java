@@ -14,6 +14,9 @@ import com.apap.tugas1.model.PegawaiModel;
 public interface JabatanDB extends JpaRepository<JabatanModel, Long> {
 	Optional<JabatanModel> findById(long id);
 	
+	/*List<PegawaiModel> findByNama
+	findByInstansiOrderByTanggalLahirAsc*/
+	
 	
 /*	@Query(value=
 			"select top 1 id from (select sum(score) scoresum, student.id from studypoint join student on student.id=studypoint.student_id group by student.id) order by scoresum desc", nativeQuery=true)

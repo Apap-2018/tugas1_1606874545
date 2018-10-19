@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
 import com.apap.tugas1.model.PegawaiModel;
 import com.apap.tugas1.repository.JabatanDB;
@@ -57,7 +58,20 @@ public class JabatanServiceImpl implements JabatanService {
 		
 	}
 	
-	public ArrayList<PegawaiModel> getUmur(JabatanModel jabatan) {
+	
+/*	public ArrayList<Integer> hitungJumlahPegawai() {
+		ArrayList<Integer> jumlahPegawai = new ArrayList<Integer>()
+		for(JabatanModel jabatan : jabatanDB.findAll()) {
+			int jumlah = jabatan.getPegawaiList().size();
+		}
+		return null;
+	
+		
+	}*/
+	
+	
+	
+	/*public ArrayList<PegawaiModel> getUmur(JabatanModel jabatan) {
 		long idTarget = jabatan.getId();
 		ArrayList <PegawaiModel> pegawaiInstansi = new ArrayList<PegawaiModel>();
 		ArrayList<PegawaiModel> hasil = new ArrayList<PegawaiModel>();
@@ -91,10 +105,9 @@ public class JabatanServiceImpl implements JabatanService {
 		
 		return hasil;
 		
-	}
+	}*/
 	
-	public int hitungUmur(Date tglLahir) {
-		
+/*	public int hitungUmur(Date tglLahir) {
 		
 		LocalDate now = LocalDate.now();                          //Today's date
 		LocalDate born = LocalDate.of(1960, Month.JANUARY, 1);  //Birth date
@@ -103,6 +116,6 @@ public class JabatanServiceImpl implements JabatanService {
 		
 		return intYears;
 	}
-	
+	*/
 
 }

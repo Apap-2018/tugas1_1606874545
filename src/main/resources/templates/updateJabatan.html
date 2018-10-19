@@ -27,8 +27,16 @@
 		Amount: <br>
 		<input type="number" name="gajiPokok" th:value="${jabatan.gajiPokok}" />
 		<br><br>
-		<button type="submit">Submit</button>
+		<button type="submit" onclick="myFunction()">Submit</button>
 	</form>
+	
+		<script>
+		function myFunction() {
+    	alert("Jabatan Berhasil Diubah");
+		}
+		</script>
 </body>
+
+
 
 </html>

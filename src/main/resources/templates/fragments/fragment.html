@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<title>Home</title>
-		<title th:fragment="headerFragment(title)" th:text="${title}">Home</title>
+		<title th:fragment="headerFragment(title)" th:text="${title}"></title>
 		
 		<head th:fragment="css">
 			<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
@@ -28,6 +28,10 @@
 					
 					<li class="nav-item active">
 						<a class="nav-link" th:href="@{/jabatan/viewall}">View All Jabatan</a>
+					</li>
+					
+					<li class="nav-item active">
+						<a class="nav-link" th:href="@{/pegawai/tambah}"> Tambah Pegawai </a>
 					</li>
 					
 				</ul>

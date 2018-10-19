@@ -1,5 +1,8 @@
 package com.apap.tugas1.service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,12 @@ public class PegawaiServiceImpl implements PegawaiService {
 	
 	
 	@Override
+	public void tambahPegawai(PegawaiModel pegawaiBaru) {
+		pegawaiDB.save(pegawaiBaru);
+	}
+	
+	
+	@Override
 	public PegawaiModel getPegawaiDetailByNip(String nip) {
 		return pegawaiDB.findByNip(nip);
 	}
@@ -45,6 +54,42 @@ public class PegawaiServiceImpl implements PegawaiService {
 		
 		return totalGaji;
 	}
+	
+	
+	
+	@Override
+	public String buatNip(PegawaiModel pegawai) {
+		DateFormat dateFormat = new SimpleDateFormat("ddMMYY");
+		Date tglLahir = pegawai.getTanggalLahir();
+		String formatted = dateFormat.format(tglLahir);
+		System.out.println("date->"+formatted);
+		
+		Long kodeInstansi = pegawai.getInstansi().getId();
+		System.out.println("kode instansi->"+kodeInstansi);
+		
+		int idAkhir = 0;
+		for (PegawaiModel peg : pegawaiDB.findAll()) {
+			if (peg.getTanggalLahir().equals(pegawai.getTanggalLahir()) && peg.getTahunMasuk().equals(pegawai.getTahunMasuk())) {
+				idAkhir+=1;
+			}
+		}
+		idAkhir+=1;
+		
+		String kodeMasuk = "";
+		if (idAkhir<10) {
+			kodeMasuk = "0"+idAkhir;
+		}
+		else {
+			kodeMasuk = Integer.toString(idAkhir);
+		}
+		
+		System.out.println(kodeInstansi+formatted+pegawai.getTahunMasuk()+kodeMasuk);
+		return kodeInstansi+formatted+pegawai.getTahunMasuk()+kodeMasuk;
+		
+	}
+	
+	
+	
 	
 	
 	

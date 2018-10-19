@@ -1,14 +1,17 @@
 package com.apap.tugas1.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.apap.tugas1.model.InstansiModel;
 import com.apap.tugas1.model.JabatanModel;
@@ -19,6 +22,7 @@ import com.apap.tugas1.repository.JabatanDB;
 import com.apap.tugas1.repository.ProvinsiDB;
 import com.apap.tugas1.service.JabatanService;
 import com.apap.tugas1.service.PegawaiService;
+import com.apap.tugas1.service.ProvinsiService;
 
 
 
@@ -33,6 +37,9 @@ private PegawaiService pegawaiService;
 private JabatanService jabatanService;
 
 @Autowired
+private ProvinsiService provinsiService;
+
+@Autowired
 private JabatanDB jabatanDB;
 
 @Autowired
@@ -40,11 +47,14 @@ private InstansiDB instansiDB;
 
 @Autowired
 private ProvinsiDB provinsiDB;
+
+
 	
 	@RequestMapping("/")
 	private String home(Model model) {
 		
 		model.addAttribute("jabatan", jabatanDB.findAll());
+		model.addAttribute("instansi", instansiDB.findAll());
 		return "home";
 	}
 	
@@ -62,31 +72,62 @@ private ProvinsiDB provinsiDB;
 	
 	@RequestMapping("/pegawai/tambah")
 	private String tambahPegawai(Model model) {
-		PegawaiModel pegawai = new PegawaiModel();
-		pegawai.setInstansi(new InstansiModel());
 		
-		model.addAttribute("pegawai", pegawai);
-		model.addAttribute("provinsi", provinsiDB.findAll());
-		model.addAttribute("instansi", instansiDB.findAll());
-		model.addAttribute("jabatan", jabatanDB.findAll());
+		PegawaiModel peg = new PegawaiModel();
+		if (peg.getJabatanList()==null) {
+			peg.setJabatanList(new ArrayList());
+		}
+		peg.getJabatanList().add(new JabatanModel());
+		List<ProvinsiModel> provinsiList = provinsiDB.findAll();
+		List<JabatanModel> jabatanList = jabatanDB.findAll();
+		model.addAttribute("jabatanList",jabatanList);
+		model.addAttribute("pegawai", peg);
+		model.addAttribute("provinsi", provinsiList);
+		return "tambahPegawai";
+		
+	}
 	
+
+	
+	
+	@RequestMapping(value = "/pegawai/tambah/instansi",method = RequestMethod.GET)
+	private @ResponseBody List<InstansiModel> cekInstansi(@RequestParam(value="provinsiId") long provinsiId) {
+		System.out.println(provinsiId+"AAAA");
+		ProvinsiModel provinsi = provinsiService.getProvinsiById(provinsiId).get();
+		
+		return provinsi.getInstansiList();
+	}
+	
+	@RequestMapping(value="/pegawai/tambah",method = RequestMethod.POST, params= {"addRow"})
+	private String addRow (@ModelAttribute PegawaiModel pegawai, Model model, BindingResult bindingResult) {
+		if (pegawai.getJabatanList() == null) {
+			pegawai.setJabatanList(new ArrayList());
+		}
+		System.out.println(pegawai.getJabatanList().size());
+		pegawai.getJabatanList().add(new JabatanModel());
+		
+		List<JabatanModel> jabatanList = jabatanDB.findAll();
+		List<ProvinsiModel> provinsiList = provinsiDB.findAll();
+		model.addAttribute("provinsi", provinsiList);
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("jabatanList",jabatanList);
 		return "tambahPegawai";
 	}
 	
-	@RequestMapping(value="/pegawai/tambah",method=RequestMethod.POST)
-	private String tambahJabatanSubmit(@ModelAttribute PegawaiModel pegawaiBaru, Model model) {
+	@RequestMapping(value = "/pegawai/tambah", method = RequestMethod.POST, params= {"submit"})
+	private String tambahPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model) {
 		
-		System.out.println(pegawaiBaru.getNama());
+		String nipGenerate = pegawaiService.buatNip(pegawai);
 		
+		pegawai.setNip(nipGenerate);
 		
-		System.out.println(pegawaiBaru.getJabatanList());
-		
-		model.addAttribute("notif", "Jabatan");
-		model.addAttribute("keterangan", "wkwkwk");
-		
-		return "berhasil";
-		
+		pegawaiService.tambahPegawai(pegawai);
+		String msg = "Pegawai dengan NIP "+nipGenerate+" berhasil ditambahkan";
+		model.addAttribute("msg",msg);
+		return "home";
 	}
+	
+
 	
 
 	

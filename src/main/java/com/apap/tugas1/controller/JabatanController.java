@@ -40,9 +40,8 @@ private String tambahJabatan(Model model) {
 @RequestMapping(value="/jabatan/tambah",method=RequestMethod.POST)
 private String tambahJabatanSubmit(@ModelAttribute JabatanModel jabatanSubmit, Model model) {
 	jabatanService.tambahJabatan(jabatanSubmit);
-	model.addAttribute("notif", "Jabatan");
-	model.addAttribute("keterangan", "ditambahkan");
-	return "berhasil";
+	model.addAttribute("jabatan", new JabatanModel());
+	return "tambahJabatan";
 	
 }
 
@@ -72,29 +71,23 @@ private String ubahJabatan(String idJabatan, Model model)	{
 @RequestMapping(value="/jabatan/ubah",method=RequestMethod.POST)
 private String ubahJabatanSubmit(@ModelAttribute JabatanModel dataBaru, Model model) {
 	long idJabatan = dataBaru.getId();
+	JabatanModel jabatan= jabatanService.getJabatanById(idJabatan).get();
 	jabatanService.ubahJabatan(dataBaru, idJabatan);
-	model.addAttribute("notif", "Jabatan");
-	model.addAttribute("keterangan", "diubah");
-	
-	return "berhasil";
+	model.addAttribute("jabatan",jabatan);
+	return "updateJabatan";
 	
 }
 
 @RequestMapping(value="/jabatan/hapus",method=RequestMethod.POST)
 private String hapusJabatan(@ModelAttribute JabatanModel jabatanHapus, Model model) {
-	System.out.println("test masuk");
+	
 	long id = jabatanHapus.getId();
-	System.out.println(jabatanHapus.getId());
-	System.out.println(jabatanHapus.getNama()+" aa");
 	JabatanModel jabatan = jabatanService.getJabatanById(id).get();
 	jabatanService.hapusJabatan(jabatan);
-	
-	model.addAttribute("notif", "Jabatan");
-	model.addAttribute("keterangan", "hapus");
-	
-	return "tes";
-	
+	return "redirect:/";
 }
+
+
 
 
 }
