@@ -88,6 +88,19 @@ public class PegawaiServiceImpl implements PegawaiService {
 		
 	}
 	
+	@Override
+	public void ubahPegawai(PegawaiModel pegawaiUbah) {
+		PegawaiModel pegawaiTarget = pegawaiDB.findByNip(pegawaiUbah.getNip());
+		
+		pegawaiTarget.setNama(pegawaiUbah.getNama());
+		pegawaiTarget.setTempatLahir(pegawaiUbah.getTempatLahir());
+		pegawaiTarget.setTanggalLahir(pegawaiUbah.getTanggalLahir());
+		pegawaiTarget.getInstansi().setProvinsi(pegawaiUbah.getInstansi().getProvinsi());
+		
+		
+		pegawaiDB.save(pegawaiTarget);
+		
+	}
 	
 	
 	

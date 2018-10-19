@@ -18,7 +18,7 @@
 		<p th:text="'Tempat Lahir: ' + ${pegawai.tempatLahir}"></p>
 		<p th:text="'Tanggal Lahir: ' + ${pegawai.tanggalLahir}"></p>
 		<p th:text="'Tahun Masuk: ' + ${pegawai.tahunMasuk}"></p>
-		<p th:text="'Nama Instansi: ' + ${pegawai.instansi.nama}"></p>
+		<p th:text="'Nama Instansi: ' + ${pegawai.instansi.nama}+'-'+${pegawai.instansi.provinsi.nama}"></p>
 		<p th:text="'Gaji: Rp.' + ${gaji}"></p>
 			
 		<p><i> Jabatan:</i> </p>
@@ -26,6 +26,13 @@
 			<p th:text="${jabatan.nama}"></p> 
 			
 		</div>
+		
+		<form th:action="@{/pegawai/ubah}" th:object=${pegawai} method="GET">
+		<input type="hidden" name="nip" th:value="${pegawai.nip}"/>
+		<button type="submit"> Ubah Data </button>
+		</form>	
+		<br>
+		<br>
 		
 		
 	</body>

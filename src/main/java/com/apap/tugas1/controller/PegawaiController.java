@@ -123,10 +123,34 @@ private ProvinsiDB provinsiDB;
 		
 		pegawaiService.tambahPegawai(pegawai);
 		String msg = "Pegawai dengan NIP "+nipGenerate+" berhasil ditambahkan";
-		model.addAttribute("msg",msg);
-		return "home";
+		
+		return "redirect:/";
 	}
 	
+	
+	
+	@RequestMapping(value= {"/pegawai/ubah"}, method=RequestMethod.GET)
+	private String ubahPegawai(String nip, Model model)	{
+		
+		PegawaiModel pegawai = pegawaiService.getPegawaiDetailByNip(nip);
+		System.out.println(pegawai.getNama()+" hehehe");
+		
+		
+		List<JabatanModel> jabatanList = jabatanDB.findAll();
+		List<ProvinsiModel> provinsiList = provinsiDB.findAll();
+		model.addAttribute("provinsi", provinsiList);
+		model.addAttribute("pegawai", pegawai);
+		model.addAttribute("jabatanList",jabatanList);
+	
+		
+		return "ubahPegawai";
+	}
+	@RequestMapping(value = "/pegawai/ubah", method = RequestMethod.POST, params= {"submit"})
+	private String ubahPegawaiSubmit(@ModelAttribute PegawaiModel pegawai, Model model) {
+		System.out.println(pegawai.getNama());
+		pegawaiService.ubahPegawai(pegawai);
+		return "redirect:/";
+	}
 
 	
 

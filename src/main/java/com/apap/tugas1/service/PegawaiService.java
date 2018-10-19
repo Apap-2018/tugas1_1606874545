@@ -17,6 +17,8 @@ public interface PegawaiService {
 
 	void tambahPegawai(PegawaiModel pegawaiBaru);
 
+	void ubahPegawai(PegawaiModel pegawaiUbah);
+
 	
 	
 }
