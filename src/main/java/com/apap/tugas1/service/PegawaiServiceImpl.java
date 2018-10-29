@@ -2,7 +2,9 @@ package com.apap.tugas1.service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,16 +94,36 @@ public class PegawaiServiceImpl implements PegawaiService {
 	public void ubahPegawai(PegawaiModel pegawaiUbah) {
 		PegawaiModel pegawaiTarget = pegawaiDB.findByNip(pegawaiUbah.getNip());
 		
+		
+		
 		pegawaiTarget.setNama(pegawaiUbah.getNama());
 		pegawaiTarget.setTempatLahir(pegawaiUbah.getTempatLahir());
 		pegawaiTarget.setTanggalLahir(pegawaiUbah.getTanggalLahir());
 		pegawaiTarget.getInstansi().setProvinsi(pegawaiUbah.getInstansi().getProvinsi());
+		pegawaiTarget.setInstansi(pegawaiUbah.getInstansi());
+		pegawaiTarget.setJabatanList(pegawaiUbah.getJabatanList());
 		
 		
 		pegawaiDB.save(pegawaiTarget);
 		
 	}
 	
+	@Override
+	public List<PegawaiModel> findByInstansiAndJabatanPegawai(InstansiModel instansi, JabatanModel jabatanPegawai) {
+		 
+		List<PegawaiModel> listPegawaiByInstansiAndJabatanPegawai = new ArrayList<>();
+		List<PegawaiModel> listPegawaiByInstansi = pegawaiDB.findByInstansi(instansi);
+		
+		for (int i = 0; i < listPegawaiByInstansi.size(); i++) {
+			if (listPegawaiByInstansi.get(i).getJabatanList().contains(jabatanPegawai)) {
+				
+				listPegawaiByInstansiAndJabatanPegawai.add(listPegawaiByInstansi.get(i));
+			}
+		}
+		
+		return listPegawaiByInstansiAndJabatanPegawai;
+	}
+
 	
 	
 	

@@ -3,6 +3,7 @@
 
 
 <head>
+	<title>Lihat Data Pegawai</title>
 	<title th:include="fragments/fragment :: headerFragment('Lihat Data Pegawai')"></title>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
@@ -34,17 +35,19 @@
 		<br>
 		Provinsi: <br>
 		<select id="provinsi">
-				  <option disabled="disabled" selected="" >-- Pilih Provinsi --</option>
+				  
 				  <option th:each="provinsi : ${provinsi}" 
 				          th:value="${provinsi.id}" 
 				          th:text="${provinsi.nama}"
 				          th:select="${provinsi.nama}"
+				          th:selected="${pegawai.instansi.provinsi.id == provinsi.id}"
 				         ></option>
 		</select>
 		<br>
 		
 		Nama Instansi: <br>
 		<select  id="instansi" name="instansi">
+					
 				  <!-- <option th:each="instansi : ${instansi}" 
 				          th:va	lue="${instansi.id}" 
 				          th:text="${instansi.nama}"
@@ -83,7 +86,7 @@
 	
 	<script type="text/javascript">
 	function myFunction() {
-    	alert("Pegawi Berhasil Ditambah");
+    	alert("Pegawai Berhasil Diubah");
 		}
 	$(document).ready(function(){
 		console.log("hey")

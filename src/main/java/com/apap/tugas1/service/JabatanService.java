@@ -19,6 +19,8 @@ public interface JabatanService {
 
 	void hapusJabatan(JabatanModel jabatanHapus);
 
+	JabatanModel getJabatanDetailById(Long id);
+
 	
 
 }

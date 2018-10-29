@@ -32,5 +32,10 @@ public class ProvinsiServiceImpl implements ProvinsiService {
 		System.out.println(provinsiDB.findById(id).get().getNama());
 		return provinsiDB.findById(id);
 	}
+	@Override
+	public ProvinsiModel getProvinsiDetailById(long id) {
+	
+		return provinsiDB.findById(id).get();
+	}
 	
 }

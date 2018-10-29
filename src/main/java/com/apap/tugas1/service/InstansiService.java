@@ -7,4 +7,6 @@ import com.apap.tugas1.model.PegawaiModel;
 
 public interface InstansiService {
 	List<PegawaiModel> getPegawaiTuaMuda(InstansiModel instansiTarget);
+
+	InstansiModel getInstansiDetailById(long id);
 }

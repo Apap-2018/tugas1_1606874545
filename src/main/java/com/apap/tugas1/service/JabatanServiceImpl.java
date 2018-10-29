@@ -58,6 +58,12 @@ public class JabatanServiceImpl implements JabatanService {
 		
 	}
 	
+	@Override
+	public JabatanModel getJabatanDetailById(Long id) {
+		
+		return jabatanDB.findById(id).get();
+	}
+	
 	
 /*	public ArrayList<Integer> hitungJumlahPegawai() {
 		ArrayList<Integer> jumlahPegawai = new ArrayList<Integer>()
